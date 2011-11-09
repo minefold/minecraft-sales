@@ -5,7 +5,7 @@ Bundler.require
 
 require 'uri'
 require 'logger'
-require './lib/stat'
+require './app'
 
 task :environment do
   db = URI.parse(ENV['DATABASE_URL'] || 'sqlite3://./db/development.sqlite')
@@ -22,14 +22,12 @@ task :environment do
   ActiveRecord::Base.logger = Logger.new(STDOUT)
 end
 
-namespace :db do
-  task :migrate => :environment do
-    ActiveRecord::Migration.verbose = true
-    ActiveRecord::Migrator.migrate("db/migrations")
-  end
+task :migrate => :environment do
+  ActiveRecord::Migration.verbose = true
+  ActiveRecord::Migrator.migrate("db/migrations")
 end
 
 task :cron => :environment do
-  stat = Stat.fetch!
-  stat.save
+  users = User.fetch
+  users.save
 end

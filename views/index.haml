@@ -12,15 +12,13 @@
         var data = new google.visualization.DataTable();
         data.addColumn('number', 'Total');
         data.addColumn('number', 'Paid');
-        data.addRows([
-          #{@stats.map do |s| s.to_gchart_data; end.join(",\n")}
-        ]);
+        data.addRows(#{@users.to_json});
 
         var chart = new google.visualization.AreaChart(document.getElementById('chart'));
         chart.draw(data, {
-          width: 400,
-          height: 240,
-          title: 'Minecraft Sales'
+          width: window.innerWidth,
+          height: window.innerHeight,
+          title: 'Minecraft Users'
         });
       }
 
