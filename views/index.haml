@@ -3,10 +3,26 @@
   %head
     %meta{charset: 'utf-8'}
     %title Minecraft Stats
+    %script{src: 'https://www.google.com/jsapi'}
+    :javascript
+      google.load('visualization', '1', {packages: ['corechart']});
+      google.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('number', 'Total');
+        data.addColumn('number', 'Paid');
+        data.addRows([
+          #{@stats.map do |s| s.to_gchart_data; end.join(",\n")}
+        ]);
+
+        var chart = new google.visualization.AreaChart(document.getElementById('chart'));
+        chart.draw(data, {
+          width: 400,
+          height: 240,
+          title: 'Minecraft Sales'
+        });
+      }
+
   %body
-    %h1 Minecraft Stats
-    - @stats.each do |stat|
-      %p
-        Registered: #{stat.registered}
-        %br
-        Paid: #{stat.paid}
+    #chart

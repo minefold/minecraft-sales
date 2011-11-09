@@ -25,4 +25,9 @@ class Stat < ActiveRecord::Base
   def self.new_with_user_numbers(registered, paid)
     new(registered: registered, paid: paid)
   end
+
+  def to_gchart_data
+    [registered, paid].to_json
+  end
+
 end
