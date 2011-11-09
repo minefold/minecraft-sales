@@ -5,3 +5,8 @@
     %title Minecraft Stats
   %body
     %h1 Minecraft Stats
+    - @stats.each do |stat|
+      %p
+        Registered: #{stat.registered}
+        %br
+        Paid: #{stat.paid}
