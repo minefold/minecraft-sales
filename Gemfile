@@ -1,19 +1,13 @@
-source :rubygems
+source 'https://rubygems.org'
 
-gem 'sinatra'
-gem 'haml'
-gem 'sass'
-gem 'thin'
-gem 'rest-client'
-gem 'nokogiri'
-gem 'activerecord', require: 'active_record'
-
-group :production do
-  gem 'pg'
+group :web do
+  gem 'sinatra'
 end
 
-group :development do
-  gem 'foreman'
-  gem 'heroku'
-  gem 'sqlite3'
+group :worker do
+  gem 'rest-client'
+  gem 'nokogiri'
 end
+
+gem 'pg'
+gem 'sequel'

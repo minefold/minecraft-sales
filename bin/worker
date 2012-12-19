@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+Bundler.require :default, :worker
+
+
+DB = Sequel.connect(ENV['DATABASE_URL'])
+URL = "http://www.minecraft.net/stats"
+
+body = RestClient.get(URL)
+doc = Nokogiri::HTML(body)
+
+# Extract the script tag that has the paidUsers variable
+script_tag = doc.css('#main > script')
+
+total = script_tag.text.match(/paidUsers = (\d+);/)[1].to_i
+
+# Insert
+DB[:sales].insert(at: Time.now, total: total)
