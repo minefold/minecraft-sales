@@ -60,7 +60,7 @@ var svg = d3.select("body").append("svg")
 
 d3.csv("/sales.csv", function(error, data) {
   data.forEach(function(d) {
-    d.date = parseDate(d.day);
+    d.day = parseDate(d.day);
     d.sales = +d.sales;
   });
 
